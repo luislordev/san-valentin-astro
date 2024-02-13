@@ -1,14 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
 ---
 
-<Layout title="Welcome to Astro.">
-	<main>
-		<h1>Hola</h1>
-	</main>
+<Layout title="Para mi crush">
+  <main class="flex flex-col justify-start items-center h-screen">
+    <div class="p-4">
+      <Card class="" />
+    </div>
+    <div class="mt-4 flex justify-center">
+      <Button class="btn-primary mr-6 z-10 sticky justify-self-start">
+        <span class="px-6">Si</span>
+      </Button>
+      <Button id="btnNo" class="btn-secondary z-10">
+        <span class="px-6">No</span>
+      </Button>
+    </div>
+  </main>
 </Layout>
 
-<style>
-
-</style>
+<script>
+  const btnNo = document.getElementById('btnNo')!;
+  btnNo.addEventListener('mouseenter', () => {
+    const randomX = Math.floor(
+      Math.random() * (window.innerWidth - btnNo.offsetWidth),
+    );
+    const randomY = Math.floor(
+      Math.random() * (window.innerHeight - btnNo.offsetHeight),
+    );
+    btnNo.style.position = 'absolute';
+    btnNo.style.left = randomX + 'px';
+    btnNo.style.top = randomY + 'px';
+  });
+</script>
