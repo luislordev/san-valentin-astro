@@ -2,15 +2,19 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 import Button from '../components/Button.astro';
+import Modal from '../components/Modal.astro';
 ---
 
 <Layout title="Para mi crush">
   <main class="flex flex-col justify-start items-center h-screen">
     <div class="p-4">
-      <Card class="" />
+      <Card />
     </div>
     <div class="mt-4 flex justify-center">
-      <Button class="btn-primary mr-6 z-10 sticky justify-self-start">
+      <Button
+        id="btnSi"
+        class="btn-primary mr-6 z-10 sticky justify-self-start"
+      >
         <span class="px-6">Si</span>
       </Button>
       <Button id="btnNo" class="btn-secondary z-10">
@@ -18,19 +22,29 @@ import Button from '../components/Button.astro';
       </Button>
     </div>
   </main>
+  <Modal />
 </Layout>
 
 <script>
   const btnNo = document.getElementById('btnNo')!;
-  btnNo.addEventListener('mouseenter', () => {
-    const randomX = Math.floor(
-      Math.random() * (window.innerWidth - btnNo.offsetWidth),
-    );
-    const randomY = Math.floor(
-      Math.random() * (window.innerHeight - btnNo.offsetHeight),
-    );
+  const btnSi = document.getElementById('btnSi')!;
+  const my_modal_2 = document.getElementById('my_modal_2')! as HTMLFormElement;
+
+  function getRandomPosition(max: number, offset: number) {
+    return Math.floor(Math.random() * (max - offset));
+  }
+
+  function moveBtnNo() {
+    const randomX = getRandomPosition(window.innerWidth, btnNo.offsetWidth);
+    const randomY = getRandomPosition(window.innerHeight, btnNo.offsetHeight);
     btnNo.style.position = 'absolute';
     btnNo.style.left = randomX + 'px';
     btnNo.style.top = randomY + 'px';
+  }
+
+  btnNo.addEventListener('mouseenter', moveBtnNo);
+
+  btnSi.addEventListener('click', () => {
+    my_modal_2.showModal();
   });
 </script>
